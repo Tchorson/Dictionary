@@ -17,7 +17,7 @@ public class RecordController {
 
     @GetMapping(path = "list", produces = "application/json")
     public @ResponseBody List<RecordModel> getRecords(@RequestBody RecordModel body) {
-        return recordService.getUserRecords(body);
+        return recordService.getUserRecordsByLanguage(body.getUser(), body.getLanguage());
     }
 
     @GetMapping(path = "{user}/list/{word}", produces = "application/json")

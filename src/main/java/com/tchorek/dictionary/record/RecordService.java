@@ -1,5 +1,6 @@
 package com.tchorek.dictionary.record;
 
+import com.tchorek.dictionary.enums.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class RecordService {
         return recordRepository.findWordByUser(word, user);
     }
 
-    public List<RecordModel> getUserRecords(RecordModel requestBody){
-        return RecordMapper.mapRecordEntitiesToModels(recordRepository.getUserRecords(requestBody.getUser(), requestBody.getLanguage().name()));
+    public List<RecordModel> getUserRecordsByLanguage(String user, Language language){
+        return RecordMapper.mapRecordEntitiesToModels(recordRepository.getUserRecordsByLanguage(user, language.name()));
     }
 
     public void updateRecord(String word, String newTranslation, String user){

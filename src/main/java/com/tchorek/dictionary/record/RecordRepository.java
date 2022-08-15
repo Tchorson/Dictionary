@@ -23,5 +23,5 @@ public interface RecordRepository extends CrudRepository<RecordEntity, Integer> 
     List<RecordEntity> findWordByUser(@Param("word")String word, @Param("user") String user);
 
     @Query(value = "SELECT * FROM records WHERE user = :user AND language = :language", nativeQuery = true)
-    List<RecordEntity> getUserRecords(@Param("user") String user, @Param("language")String language);
+    List<RecordEntity> getUserRecordsByLanguage(@Param("user") String user, @Param("language")String language);
 }
