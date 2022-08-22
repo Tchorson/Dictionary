@@ -3,7 +3,7 @@ package com.tchorek.dictionary.record;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tchorek.dictionary.enums.Language;
+import com.tchorek.dictionary.language.Language;
 import lombok.Getter;
 
 @Getter

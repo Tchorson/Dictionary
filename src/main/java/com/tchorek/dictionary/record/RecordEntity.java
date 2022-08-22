@@ -1,6 +1,7 @@
 package com.tchorek.dictionary.record;
 
-import com.tchorek.dictionary.enums.Language;
+import com.tchorek.dictionary.language.Language;
+import com.tchorek.dictionary.language.LanguageConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "records")
+@Table(name = "Vocabulary")
 @Getter
 @ToString
 @AllArgsConstructor
@@ -23,22 +24,15 @@ public class RecordEntity implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    @Column(name = "word")
+    @Column(name = "Word")
     private String word;
-    @Column(name = "translation")
+    @Column(name = "Translation")
     private String translation;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "language")
+    @Column(name = "Language")
+    @Convert(converter = LanguageConverter.class)
     private Language language;
-    @Column(name = "user")
+    @Column(name = "User")
     private String user;
-
-    public RecordEntity(String word, String translation, Language language, String user){
-        this.word = word.toLowerCase();
-        this.translation = translation.toLowerCase();
-        this.language = language;
-        this.user = user;
-    }
 
     @Override
     public boolean equals(Object o) {

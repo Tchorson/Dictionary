@@ -1,6 +1,6 @@
 package com.tchorek.dictionary.record;
 
-import com.tchorek.dictionary.enums.Language;
+import com.tchorek.dictionary.language.Language;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

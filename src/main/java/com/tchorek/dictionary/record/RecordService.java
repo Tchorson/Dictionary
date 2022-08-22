@@ -1,6 +1,6 @@
 package com.tchorek.dictionary.record;
 
-import com.tchorek.dictionary.enums.Language;
+import com.tchorek.dictionary.language.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
