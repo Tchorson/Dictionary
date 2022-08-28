@@ -4,7 +4,8 @@ import com.tchorek.dictionary.language.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
@@ -29,11 +30,11 @@ public class RecordServiceTest {
     }
 
     @Test
-    public void shouldSaveRecord(){
+    public void shouldSaveRecord() {
         //given
         recordRepository = mock(RecordRepository.class);
         recordService = new RecordService(recordRepository);
-        firstRecord = new RecordEntity(0,null,null,null,"test");
+        firstRecord = new RecordEntity(0, null, null, null, "test");
         //when
         when(recordRepository.save(firstRecord)).thenReturn(firstRecord);
         RecordEntity newRecord = recordService.saveRecord(firstRecord);
@@ -43,7 +44,7 @@ public class RecordServiceTest {
     }
 
     @Test
-    public void shouldGetRecord(){
+    public void shouldGetRecord() {
         //given
         firstWord = "Dog";
         firstTranslation = "Pies";
@@ -62,7 +63,7 @@ public class RecordServiceTest {
     }
 
     @Test
-    public void shouldGetRecords(){
+    public void shouldGetRecords() {
         //given
         firstWord = "Dog";
         firstTranslation = "Pies";
@@ -71,15 +72,15 @@ public class RecordServiceTest {
         user = "Mateusz_Tchorek";
         recordRepository = mock(RecordRepository.class);
         recordService = new RecordService(recordRepository);
-        firstRecord = new RecordEntity(5, firstWord,firstTranslation, Language.ENGLISH, user);
+        firstRecord = new RecordEntity(5, firstWord, firstTranslation, Language.ENGLISH, user);
         secondRecord = new RecordEntity(6, secondWord, secondTranslation, Language.ENGLISH, user);
 
         recordList = Arrays.asList(firstRecord, secondRecord);
         //when
-        when(recordRepository.getUserRecordsByLanguage(user, Language.ENGLISH.name())).thenReturn(recordList);
+        when(recordRepository.findUserWordsByLanguage(user, Language.ENGLISH.name())).thenReturn(recordList);
         List<RecordModel> newRecordList = recordService.getUserRecordsByLanguage(user, Language.ENGLISH);
         //then
-        Mockito.verify(recordRepository, Mockito.times(1)).getUserRecordsByLanguage(user, Language.ENGLISH.name());
+        Mockito.verify(recordRepository, Mockito.times(1)).findUserWordsByLanguage(user, Language.ENGLISH.name());
         assertThat(newRecordList.size()).isEqualTo(2);
         RecordModel firstNewModel = newRecordList.get(0);
         RecordModel secondNewModel = newRecordList.get(1);
@@ -96,7 +97,7 @@ public class RecordServiceTest {
     }
 
     @Test
-    public void shouldUpdateRecord(){
+    public void shouldUpdateRecord() {
         //given
         firstWord = "Dog";
         firstTranslation = "Pies";
@@ -104,16 +105,16 @@ public class RecordServiceTest {
         user = "Mateusz_Tchorek";
         recordRepository = mock(RecordRepository.class);
         recordService = new RecordService(recordRepository);
-        doNothing().when(recordRepository).updateRecord(firstWord, secondTranslation, user);
+        doNothing().when(recordRepository).updateWordTranslation(firstWord, secondTranslation, user);
 
         //when
         recordService.updateRecord(firstWord, secondTranslation, user);
         //then
-        Mockito.verify(recordRepository, Mockito.times(1)).updateRecord(firstWord, secondTranslation, user);
+        Mockito.verify(recordRepository, Mockito.times(1)).updateWordTranslation(firstWord, secondTranslation, user);
     }
 
     @Test
-    public void shouldDeleteRecord(){
+    public void shouldDeleteRecord() {
         //given
         firstWord = "Dog";
         firstTranslation = "Pies";
@@ -121,11 +122,11 @@ public class RecordServiceTest {
         user = "Mateusz_Tchorek";
         recordRepository = mock(RecordRepository.class);
         recordService = new RecordService(recordRepository);
-        doNothing().when(recordRepository).deleteRecord(firstWord, secondTranslation, user);
+        doNothing().when(recordRepository).deleteWord(firstWord, secondTranslation, user);
 
         //when
         recordService.deleteRecord(firstWord, secondTranslation, user);
         //then
-        Mockito.verify(recordRepository, Mockito.times(1)).deleteRecord(firstWord, secondTranslation, user);
+        Mockito.verify(recordRepository, Mockito.times(1)).deleteWord(firstWord, secondTranslation, user);
     }
 }

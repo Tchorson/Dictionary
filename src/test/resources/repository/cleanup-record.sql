@@ -1,1 +1,2 @@
-DELETE FROM VOCABULARY;
+DELETE FROM Vocabulary;
+DROP TABLE Vocabulary;

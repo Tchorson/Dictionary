@@ -21,8 +21,8 @@ import java.util.Objects;
 public class RecordEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     @Column(name = "Word")
     private String word;

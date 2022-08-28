@@ -18,7 +18,7 @@ public class RecordMapperTest {
     private final String user = "Tchorson";
 
     @Test
-    public void ShouldMapEntityToModel(){
+    public void shouldMapEntityToModel() {
         //given
         list = Collections.singletonList(new RecordEntity(1, word, translation, language, user));
         //when
@@ -33,7 +33,7 @@ public class RecordMapperTest {
     }
 
     @Test
-    public void ShouldMapEmptyEntityToModel(){
+    public void shouldMapEmptyEntityToModel() {
         //given
         list = Collections.singletonList(new RecordEntity(null, null, null, null, null));
         //when

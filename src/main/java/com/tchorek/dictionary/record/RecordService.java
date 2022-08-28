@@ -25,14 +25,14 @@ public class RecordService {
     }
 
     public List<RecordModel> getUserRecordsByLanguage(String user, Language language){
-        return RecordMapper.mapRecordEntitiesToModels(recordRepository.getUserRecordsByLanguage(user, language.name()));
+        return RecordMapper.mapRecordEntitiesToModels(recordRepository.findUserWordsByLanguage(user, language.name()));
     }
 
     public void updateRecord(String word, String newTranslation, String user){
-        recordRepository.updateRecord(word, newTranslation, user);
+        recordRepository.updateWordTranslation(word, newTranslation, user);
     }
 
     public void deleteRecord(String word, String translation, String user){
-        recordRepository.deleteRecord(word, translation, user);
+        recordRepository.deleteWord(word, translation, user);
     }
 }
