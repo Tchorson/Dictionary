@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import com.tchorek.dictionary.language.Language;
@@ -22,7 +26,7 @@ public class RecordMapperTest {
         //given
         list = Collections.singletonList(new RecordEntity(1, word, translation, language, user));
         //when
-        List<RecordModel> results = RecordMapper.mapRecordEntitiesToModels(list);
+        List<RecordModel> results = RecordMapper.mapToModels(list);
         RecordModel result = results.get(0);
         //then
         assertEquals(1, results.size());
@@ -37,7 +41,7 @@ public class RecordMapperTest {
         //given
         list = Collections.singletonList(new RecordEntity(null, null, null, null, null));
         //when
-        List<RecordModel> results = RecordMapper.mapRecordEntitiesToModels(list);
+        List<RecordModel> results = RecordMapper.mapToModels(list);
         RecordModel result = results.get(0);
         //then
         assertEquals(1, results.size());

@@ -1,11 +1,12 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import com.tchorek.dictionary.language.Language;
 import com.tchorek.dictionary.language.LanguageConverter;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "Vocabulary")
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

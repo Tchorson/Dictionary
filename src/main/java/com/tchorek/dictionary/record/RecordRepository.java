@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,11 +21,11 @@ public interface RecordRepository extends CrudRepository<RecordEntity, Integer> 
 
     @Modifying
     @Query(value = "UPDATE Vocabulary SET translation = :translation WHERE word = :word AND user = :user", nativeQuery = true)
-    void updateWordTranslation(@Param("word") String word, @Param("translation") String translation, @Param("user") String user);
+    void updateRecord(@Param("word") String word, @Param("translation") String translation, @Param("user") String user);
 
     @Query(value = "SELECT * FROM Vocabulary WHERE word = :word AND user = :user", nativeQuery = true)
-    List<RecordEntity> findWordByUser(@Param("word")String word, @Param("user") String user);
+    List<RecordEntity> getWord(@Param("word")String word, @Param("user") String user);
 
     @Query(value = "SELECT * FROM Vocabulary WHERE user = :user AND language = :language", nativeQuery = true)
-    List<RecordEntity> findUserWordsByLanguage(@Param("user") String user, @Param("language")String language);
+    List<RecordEntity> getWords(@Param("user") String user, @Param("language")String language);
 }

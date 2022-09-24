@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import com.tchorek.dictionary.language.Language;
@@ -83,9 +87,9 @@ class RecordRepositoryTest {
 
     @Test
     void shouldUpdateData() {
-        recordRepository.updateWordTranslation(firstWord, newTranslation, user);
+        recordRepository.updateRecord(firstWord, newTranslation, user);
 
-        List<RecordEntity> words = recordRepository.findWordByUser(firstWord, user);
+        List<RecordEntity> words = recordRepository.getWord(firstWord, user);
         RecordEntity word = words.get(0);
 
         assertEquals(amount, words.size());
@@ -101,14 +105,14 @@ class RecordRepositoryTest {
     void shouldDeleteData() {
         recordRepository.deleteWord(firstWord, firstWordTranslation, user);
 
-        List<RecordEntity> words = recordRepository.findWordByUser(firstWord, user);
+        List<RecordEntity> words = recordRepository.getWord(firstWord, user);
 
         assertEquals(0, words.size());
     }
 
     @Test
     void shouldFindWordByUser() {
-        List<RecordEntity> words = recordRepository.findWordByUser(firstWord, user);
+        List<RecordEntity> words = recordRepository.getWord(firstWord, user);
         RecordEntity word = words.get(0);
 
         assertEquals(amount, words.size());
@@ -122,7 +126,7 @@ class RecordRepositoryTest {
 
     @Test
     void shouldFindWordsByLanguage() {
-        List<RecordEntity> words = recordRepository.findUserWordsByLanguage(user, Language.ENGLISH.getLanguage());
+        List<RecordEntity> words = recordRepository.getWords(user, Language.ENGLISH.getLanguage());
         RecordEntity word = words.get(0);
 
         assertEquals(amount, words.size());

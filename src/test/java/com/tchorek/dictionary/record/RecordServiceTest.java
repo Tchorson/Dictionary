@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import com.tchorek.dictionary.language.Language;
@@ -54,10 +58,10 @@ public class RecordServiceTest {
         firstRecord = new RecordEntity(5, firstWord, firstTranslation, Language.ENGLISH, user);
         recordList = Collections.singletonList(firstRecord);
         //when
-        when(recordRepository.findWordByUser(firstWord, user)).thenReturn(recordList);
-        List<RecordEntity> newRecordList = recordService.getRecordsByWord(firstWord, user);
+        when(recordRepository.getWord(firstWord, user)).thenReturn(recordList);
+        List<RecordEntity> newRecordList = recordService.getRecord(firstWord, user);
         //then
-        Mockito.verify(recordRepository, Mockito.times(1)).findWordByUser(firstWord, user);
+        Mockito.verify(recordRepository, Mockito.times(1)).getWord(firstWord, user);
         assertThat(newRecordList.size()).isEqualTo(1);
         assertThat(newRecordList.get(0)).isSameAs(firstRecord);
     }
@@ -77,10 +81,10 @@ public class RecordServiceTest {
 
         recordList = Arrays.asList(firstRecord, secondRecord);
         //when
-        when(recordRepository.findUserWordsByLanguage(user, Language.ENGLISH.name())).thenReturn(recordList);
-        List<RecordModel> newRecordList = recordService.getUserRecordsByLanguage(user, Language.ENGLISH);
+        when(recordRepository.getWords(user, Language.ENGLISH.getLanguage())).thenReturn(recordList);
+        List<RecordModel> newRecordList = recordService.getRecords(user, Language.ENGLISH.getLanguage());
         //then
-        Mockito.verify(recordRepository, Mockito.times(1)).findUserWordsByLanguage(user, Language.ENGLISH.name());
+        Mockito.verify(recordRepository, Mockito.times(1)).getWords(user, Language.ENGLISH.getLanguage());
         assertThat(newRecordList.size()).isEqualTo(2);
         RecordModel firstNewModel = newRecordList.get(0);
         RecordModel secondNewModel = newRecordList.get(1);
@@ -105,12 +109,12 @@ public class RecordServiceTest {
         user = "Mateusz_Tchorek";
         recordRepository = mock(RecordRepository.class);
         recordService = new RecordService(recordRepository);
-        doNothing().when(recordRepository).updateWordTranslation(firstWord, secondTranslation, user);
+        doNothing().when(recordRepository).updateRecord(firstWord, secondTranslation, user);
 
         //when
         recordService.updateRecord(firstWord, secondTranslation, user);
         //then
-        Mockito.verify(recordRepository, Mockito.times(1)).updateWordTranslation(firstWord, secondTranslation, user);
+        Mockito.verify(recordRepository, Mockito.times(1)).updateRecord(firstWord, secondTranslation, user);
     }
 
     @Test

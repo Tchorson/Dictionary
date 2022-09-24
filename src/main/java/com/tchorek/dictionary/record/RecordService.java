@@ -1,15 +1,19 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
-import com.tchorek.dictionary.language.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class RecordService {
 
-    private RecordRepository recordRepository;
+    private final RecordRepository recordRepository;
 
     @Autowired
     public RecordService(RecordRepository recordRepository) {
@@ -20,18 +24,20 @@ public class RecordService {
        return recordRepository.save(record);
     }
 
-    public List<RecordEntity> getRecordsByWord(String word, String user){
-        return recordRepository.findWordByUser(word, user);
+    public List<RecordEntity> getRecord(String word, String user){
+        return recordRepository.getWord(word, user);
     }
 
-    public List<RecordModel> getUserRecordsByLanguage(String user, Language language){
-        return RecordMapper.mapRecordEntitiesToModels(recordRepository.findUserWordsByLanguage(user, language.name()));
+    public List<RecordModel> getRecords(String user, String language){
+        return RecordMapper.mapToModels(recordRepository.getWords(user, language));
     }
 
+    @Transactional
     public void updateRecord(String word, String newTranslation, String user){
-        recordRepository.updateWordTranslation(word, newTranslation, user);
+        recordRepository.updateRecord(word, newTranslation, user);
     }
 
+    @Transactional
     public void deleteRecord(String word, String translation, String user){
         recordRepository.deleteWord(word, translation, user);
     }

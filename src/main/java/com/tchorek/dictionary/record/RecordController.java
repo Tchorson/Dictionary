@@ -1,7 +1,10 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,34 +15,40 @@ import java.util.List;
 @RequestMapping(path = "dictionary/")
 public class RecordController {
 
+    private final RecordService recordService;
+
     @Autowired
-    private RecordService recordService;
-
-    @GetMapping(path = "list", produces = "application/json")
-    public @ResponseBody List<RecordModel> getRecords(@RequestBody RecordModel body) {
-        return recordService.getUserRecordsByLanguage(body.getUser(), body.getLanguage());
+    public RecordController(RecordService recordService) {
+        this.recordService = recordService;
     }
 
-    @GetMapping(path = "{user}/list/{word}", produces = "application/json")
-    public @ResponseBody List<RecordEntity> getRecord(@PathVariable String user, @PathVariable String word) {
-        return recordService.getRecordsByWord(word, user);
+    @GetMapping(path = "list", consumes = "application/json", produces = "application/json")
+    public @ResponseBody
+    List<RecordModel> getRecords(@RequestParam("user") String user, @RequestParam("language") String language) {
+        return recordService.getRecords(user, language);
     }
 
-    @PostMapping("request")
+    @GetMapping(path = "{user}/list/{word}", consumes = "application/json", produces = "application/json")
+    public @ResponseBody
+    List<RecordEntity> getRecord(@PathVariable String user, @PathVariable String word) {
+        return recordService.getRecord(word, user);
+    }
+
+    @PostMapping(path = "request", consumes = "application/json", produces = "application/json")
     public ResponseEntity saveRecord(@RequestBody RecordEntity record) {
         recordService.saveRecord(record);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(record);
     }
 
-    @PutMapping("update")
+    @PutMapping(path = "update", consumes = "application/json", produces = "application/json")
     public ResponseEntity updateRecord(@RequestBody RecordModel record) {
         recordService.updateRecord(record.getWord(), record.getTranslation(), record.getUser());
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(record);
     }
 
-    @DeleteMapping("delete")
+    @DeleteMapping(path = "delete", consumes = "application/json", produces = "application/json")
     public ResponseEntity deleteRecord(@RequestBody RecordModel record) {
         recordService.deleteRecord(record.getWord(), record.getTranslation(), record.getUser());
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(record);
     }
 }

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.language;
 
 import java.util.Arrays;
@@ -9,7 +13,7 @@ public enum Language {
     SPANISH("spa"),
     UNKNOWN("unknown");
 
-    private String language;
+    private final String language;
 
     Language(String language) {
         this.language = language;

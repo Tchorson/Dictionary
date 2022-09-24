@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
 import com.google.gson.Gson;
@@ -35,6 +39,7 @@ public class RecordControllerTest {
     private final String newTranslation = "Policjant";
     private final String user = "Mr_Test";
     private final Language english = Language.ENGLISH;
+    private final String englishVal = Language.ENGLISH.getLanguage();
     private final Gson gson = new Gson();
     private final RecordModel singleRecordModel = new RecordModel(word, translation, english, user);
     private final RecordModel updatedRecordModel = new RecordModel(word, newTranslation, english, user);
@@ -47,14 +52,14 @@ public class RecordControllerTest {
 
     @Test
     public void shouldReturnRecordsByLanguage() throws Exception {
-        when(service.getUserRecordsByLanguage(user, english)).thenReturn(Collections.singletonList(singleRecordModel));
+        when(service.getRecords(user, englishVal)).thenReturn(Collections.singletonList(singleRecordModel));
 
         this.recordControllerMock.perform(
                         get("/dictionary/list")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .characterEncoding("utf-8")
-                                .content(singleModelJson)
+                                .queryParam("user", user)
+                                .queryParam("language",englishVal)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -63,7 +68,7 @@ public class RecordControllerTest {
 
     @Test
     public void shouldReturnRecordsByWord() throws Exception {
-        when(service.getRecordsByWord(word, user)).thenReturn(Collections.singletonList(singleRecordEntity));
+        when(service.getRecord(word, user)).thenReturn(Collections.singletonList(singleRecordEntity));
         String url = "/dictionary/" + user + "/list/" + word;
 
         this.recordControllerMock.perform(
