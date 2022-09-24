@@ -4,5 +4,8 @@
 
 package com.tchorek.dictionary.user;
 
-public class UserRepository {
+import static org.junit.jupiter.api.Assertions.*;
+
+class UserControllerTest {
+
 }

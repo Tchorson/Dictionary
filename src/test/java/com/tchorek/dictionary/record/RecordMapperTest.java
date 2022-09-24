@@ -1,6 +1,10 @@
+/*
+ * Copyright (c) 2022. Mateusz Tchorek. All rights reserved.
+ */
+
 package com.tchorek.dictionary.record;
 
-import com.tchorek.dictionary.enums.Language;
+import com.tchorek.dictionary.language.Language;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -18,11 +22,11 @@ public class RecordMapperTest {
     private final String user = "Tchorson";
 
     @Test
-    public void ShouldMapEntityToModel(){
+    public void shouldMapEntityToModel() {
         //given
         list = Collections.singletonList(new RecordEntity(1, word, translation, language, user));
         //when
-        List<RecordModel> results = RecordMapper.mapRecordEntitiesToModels(list);
+        List<RecordModel> results = RecordMapper.mapToModels(list);
         RecordModel result = results.get(0);
         //then
         assertEquals(1, results.size());
@@ -33,11 +37,11 @@ public class RecordMapperTest {
     }
 
     @Test
-    public void ShouldMapEmptyEntityToModel(){
+    public void shouldMapEmptyEntityToModel() {
         //given
         list = Collections.singletonList(new RecordEntity(null, null, null, null, null));
         //when
-        List<RecordModel> results = RecordMapper.mapRecordEntitiesToModels(list);
+        List<RecordModel> results = RecordMapper.mapToModels(list);
         RecordModel result = results.get(0);
         //then
         assertEquals(1, results.size());
